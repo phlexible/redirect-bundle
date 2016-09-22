@@ -15,9 +15,12 @@ services:
             - {name: kernel.event_subscriber}
 
     phlexible_element_redirect.listener.dispatch:
-        class: Phlexible\Bundle\ElementRedirectBundle\EventListener\DispatchListener
+        class: Phlexible\Bundle\ElementRedirectBundle\EventListener\RedirectListener
         arguments:
             - "@phlexible_element_redirect.redirect_manager"
+            - "@phlexible_tree.content_tree_manager"
+            - "@phlexible_siteroot.siteroot_request_matcher"
+            - "@router"
         tags:
             - {name: kernel.event_subscriber}
 

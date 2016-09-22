@@ -83,12 +83,15 @@ class NodeListener implements EventSubscriberInterface
 
         if ($request->request->has('redirect')) {
             // save redirect data
-            $redirects = array();
             $uris = $request->request->get('redirect');
-            foreach ($uris as $uri) {
-                $redirects[] = new Redirect($node->getId(), $language, $uri);
+            if ($uris) {
+                $uris = json_decode($uris);
+                $redirects = array();
+                foreach ($uris as $uri) {
+                    $redirects[] = new Redirect($node->getId(), $language, $uri);
+                }
+                $this->redirectManager->updateRedirects($redirects);
             }
-            $this->redirectManager->updateRedirects($redirects);
         }
     }
 }

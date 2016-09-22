@@ -15,7 +15,7 @@ Phlexible.elementredirect.RedirectAccordion = Ext.extend(Ext.grid.EditorGridPane
     key: 'redirect',
 
     initComponent: function() {
-        this.store = new Ext.data.SimpleStore({
+        this.store = new Ext.data.JsonStore({
             fields: ['id', 'nodeId', 'language', 'url'],
             listeners: {
                 datachanged: function(store) {

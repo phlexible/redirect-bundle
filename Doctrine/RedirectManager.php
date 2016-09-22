@@ -101,7 +101,7 @@ class RedirectManager implements RedirectManagerInterface
     public function findByUri($uri)
     {
         $redirects = $this->getRedirectRepository()->findBy(array(
-            'uri' => $uri,
+            'url' => $uri,
         ));
 
         return $redirects;
