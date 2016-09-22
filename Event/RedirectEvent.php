@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\ElementRedirect\Event;
+namespace Phlexible\Bundle\ElementRedirectBundle\Event;
 
 use Phlexible\Bundle\ElementRedirectBundle\Entity\Redirect;
 use Symfony\Component\EventDispatcher\Event;

@@ -6,9 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\ElementRedirect\Model;
+namespace Phlexible\Bundle\ElementRedirectBundle\Model;
 
 use Phlexible\Bundle\ElementRedirectBundle\Entity\Redirect;
+use Phlexible\Bundle\TreeBundle\Model\TreeNodeInterface;
 
 /**
  * Redirect manager interface
@@ -18,12 +19,12 @@ use Phlexible\Bundle\ElementRedirectBundle\Entity\Redirect;
 interface RedirectManagerInterface
 {
     /**
-     * @param Node   $node
-     * @param string $language
+     * @param TreeNodeInterface $node
+     * @param string            $language
      *
      * @return Redirect[]
      */
-    public function findByNodeAndLanguage(Node $node, $language);
+    public function findByNodeAndLanguage(TreeNodeInterface $node, $language);
 
     /**
      * @param string $uri
@@ -48,9 +49,19 @@ interface RedirectManagerInterface
     public function findByUriAndSiterootId($uri, $siterootId);
 
     /**
+     * @param Redirect[] $redirects
+     */
+    public function updateRedirects(array $redirects);
+
+    /**
      * @param Redirect $redirect
      */
     public function updateRedirect(Redirect $redirect);
+
+    /**
+     * @param Redirect[] $redirects
+     */
+    public function deleteRedirects(array $redirects);
 
     /**
      * @param Redirect $redirect

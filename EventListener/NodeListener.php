@@ -6,17 +6,22 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\ElementRedirect\EventListener;
+namespace Phlexible\Bundle\ElementRedirectBundle\EventListener;
 
-use Phlexible\Bundle\ElementRedirect\Model\RedirectManagerInterface;
+use Phlexible\Bundle\ElementBundle\ElementEvents;
+use Phlexible\Bundle\ElementBundle\Event\LoadDataEvent;
+use Phlexible\Bundle\ElementBundle\Event\SaveNodeDataEvent;
+use Phlexible\Bundle\ElementRedirectBundle\Model\RedirectManagerInterface;
 use Phlexible\Bundle\ElementRedirectBundle\Entity\Redirect;
+use Phlexible\Bundle\TreeBundle\Event\NodeEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Node listener
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class NodeListener
+class NodeListener implements EventSubscriberInterface
 {
     /**
      * @var RedirectManagerInterface
@@ -31,23 +36,59 @@ class NodeListener
         $this->redirectManager = $redirectManager;
     }
 
-    public function onUpdateNode(NodeEvent $event)
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
     {
-        $node     = $event->getNode();
-        $language = $event->getLanguage();
-        $data     = $event->getData();
+        return array(
+            ElementEvents::LOAD_DATA => 'onLoadElement',
+            ElementEvents::SAVE_NODE_DATA => 'onSaveNodeData',
+        );
+    }
 
-        $redirects = $this->redirectManager->findForNodeAndLanguage($node, $language);
-        foreach ($redirects as $redirect) {
-            $this->redirectManager->removeRedirect($redirect);
+    /**
+     * @param LoadDataEvent $event
+     */
+    public function onLoadElement(LoadDataEvent $event)
+    {
+        $node = $event->getNode();
+        $language = $event->getLanguage();
+        $data = $event->getData();
+
+        $redirects = array();
+        foreach ($this->redirectManager->findByNodeAndLanguage($node, $language) as $redirect) {
+            $redirects[] = array(
+                'id'       => $redirect->getId(),
+                'nodeId'   => $redirect->getNodeId(),
+                'language' => $redirect->getLanguage(),
+                'url'      => $redirect->getUrl(),
+            );
         }
 
-        if (!empty($data['redirect'])) {
+        $data->redirects = $redirects;
+    }
+
+    /**
+     * @param SaveNodeDataEvent $event
+     */
+    public function onSaveNodeData(SaveNodeDataEvent $event)
+    {
+        $node = $event->getNode();
+        $language = $event->getLanguage();
+        $request = $event->getRequest();
+
+        $redirects = $this->redirectManager->findByNodeAndLanguage($node, $language);
+        $this->redirectManager->deleteRedirects($redirects);
+
+        if ($request->request->has('redirect')) {
             // save redirect data
-            foreach ($data['redirects'] as $uri) {
-                $redirect = new Redirect($node->getId(), $language, $uri);
-                $this->redirectManager->updateRedirect($redirect);
+            $redirects = array();
+            $uris = $request->request->get('redirect');
+            foreach ($uris as $uri) {
+                $redirects[] = new Redirect($node->getId(), $language, $uri);
             }
+            $this->redirectManager->updateRedirects($redirects);
         }
     }
 }

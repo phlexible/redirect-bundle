@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlexible\Bundle\ElementRedirect;
+namespace Phlexible\Bundle\ElementRedirectBundle;
 
 /**
  * Redirect events

@@ -6,16 +6,17 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\ElementRedirect\EventListener;
+namespace Phlexible\Bundle\ElementRedirectBundle\EventListener;
 
-use Phlexible\Bundle\ElementRedirect\Model\RedirectManagerInterface;
+use Phlexible\Bundle\ElementRedirectBundle\Model\RedirectManagerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Dispatch listener
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class DispatchListener
+class DispatchListener implements EventSubscriberInterface
 {
     /**
      * @var RedirectManagerInterface
@@ -28,6 +29,16 @@ class DispatchListener
     public function __construct(RedirectManagerInterface $redirectManager)
     {
         $this->redirectManager = $redirectManager;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'x' => 'onDispatchTid',
+        );
     }
 
     public function onDispatchTid(BeforeDispatchTid $event)

@@ -16,14 +16,12 @@ Phlexible.elementredirect.RedirectAccordion = Ext.extend(Ext.grid.EditorGridPane
 
     initComponent: function() {
         this.store = new Ext.data.SimpleStore({
-            fields: ['url'],
+            fields: ['id', 'nodeId', 'language', 'url'],
             listeners: {
-                datachanged: {
-                    fn: function(store) {
-                        this.updateTitle(store.getCount());
-                    },
-                    scope: this
-                }
+                datachanged: function(store) {
+                    this.updateTitle(store.getCount());
+                },
+                scope: this
             }
         });
 
@@ -37,25 +35,23 @@ Phlexible.elementredirect.RedirectAccordion = Ext.extend(Ext.grid.EditorGridPane
         this.sm = new Ext.grid.RowSelectionModel({
             multiSelect: true,
             listeners: {
-                selectionchange: {
-                    fn: function(sm) {
-                        var records = sm.getSelections();
+                selectionchange: function(sm) {
+                    var records = sm.getSelections();
 
-                        if (!records.length) {
-                            this.getTopToolbar().items.items[2].disable();
-                        }
-                        else {
-                            this.getTopToolbar().items.items[2].enable();
-                        }
-                    },
-                    scope: this
-                }
+                    if (!records.length) {
+                        this.getTopToolbar().items.items[2].disable();
+                    }
+                    else {
+                        this.getTopToolbar().items.items[2].enable();
+                    }
+                },
+                scope: this
             }
         });
 
         this.tbar = [{
             text: this.strings.add,
-            iconCls: 'm-redirects-add-icon',
+            iconCls: 'p-elementredirect-add-icon',
             handler: function() {
                 var r = new Ext.data.Record({url: ''});
                 this.store.insert(0, r);
@@ -63,7 +59,7 @@ Phlexible.elementredirect.RedirectAccordion = Ext.extend(Ext.grid.EditorGridPane
             scope: this
         },'-',{
             text: this.strings['remove'],
-            iconCls: 'm-redirects-remove-icon',
+            iconCls: 'p-elementredirect-remove-icon',
             handler: function() {
                 var records = this.getSelectionModel().getSelections();
 
@@ -74,7 +70,7 @@ Phlexible.elementredirect.RedirectAccordion = Ext.extend(Ext.grid.EditorGridPane
             scope: this
         }];
 
-        Makeweb.redirects.RedirectAccordion.superclass.initComponent.call(this);
+        Phlexible.elementredirect.RedirectAccordion.superclass.initComponent.call(this);
     },
 
     load: function(data) {

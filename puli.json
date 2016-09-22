@@ -2,24 +2,24 @@
     "version": "1.0",
     "name": "phlexible/element-redirect-bundle",
     "path-mappings": {
-        "/phlexible/phlexibleredirect/icons": "Resources/public/icons",
-        "/phlexible/phlexibleredirect/scripts": "Resources/scripts",
-        "/phlexible/phlexibleredirect/styles": "Resources/styles"
+        "/phlexible/phlexibleelementredirect/icons": "Resources/public/icons",
+        "/phlexible/phlexibleelementredirect/scripts": "Resources/scripts",
+        "/phlexible/phlexibleelementredirect/styles": "Resources/styles"
     },
     "bindings": {
         "0ccc7173-ba11-5df3-b86b-257c6b40ce9e": {
             "_class": "Puli\\Discovery\\Binding\\ResourceBinding",
-            "query": "/phlexible/phlexibleredirect/styles/**/*.css",
+            "query": "/phlexible/phlexibleelementredirect/styles/**/*.css",
             "type": "phlexible/styles"
         },
         "6ce284bc-e5af-55c6-88e1-7284fc2a1c31": {
             "_class": "Puli\\Discovery\\Binding\\ResourceBinding",
-            "query": "/phlexible/phlexibleredirect/icons/*.png",
+            "query": "/phlexible/phlexibleelementredirect/icons/*.png",
             "type": "phlexible/icons"
         },
         "d80e6ff2-01fd-5f75-aca8-7fdfb93099a4": {
             "_class": "Puli\\Discovery\\Binding\\ResourceBinding",
-            "query": "/phlexible/phlexibleredirect/scripts/**/*.js",
+            "query": "/phlexible/phlexibleelementredirect/scripts/**/*.js",
             "type": "phlexible/scripts"
         }
     },

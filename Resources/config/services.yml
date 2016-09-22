@@ -1,5 +1,5 @@
 services:
-    phlexible_element_redirect.manager:
+    phlexible_element_redirect.redirect_manager:
         class: Phlexible\Bundle\ElementRedirectBundle\Doctrine\RedirectManager
         arguments:
             - "@doctrine.orm.entity_manager"
@@ -10,14 +10,14 @@ services:
     phlexible_element_redirect.listener.node:
         class: Phlexible\Bundle\ElementRedirectBundle\EventListener\NodeListener
         arguments:
-            - "@phlexible_element_finder.lookup_builder"
+            - "@phlexible_element_redirect.redirect_manager"
         tags:
             - {name: kernel.event_subscriber}
 
     phlexible_element_redirect.listener.dispatch:
         class: Phlexible\Bundle\ElementRedirectBundle\EventListener\DispatchListener
         arguments:
-            - "@phlexible_element_finder.lookup_builder"
+            - "@phlexible_element_redirect.redirect_manager"
         tags:
             - {name: kernel.event_subscriber}
 

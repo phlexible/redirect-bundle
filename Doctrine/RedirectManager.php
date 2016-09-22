@@ -6,14 +6,16 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\ElementRedirect\Doctrine;
+namespace Phlexible\Bundle\ElementRedirectBundle\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Phlexible\Bundle\ElementRedirect\Event\RedirectEvent;
-use Phlexible\Bundle\ElementRedirect\Model\RedirectManagerInterface;
-use Phlexible\Bundle\ElementRedirect\RedirectEvents;
+use Phlexible\Bundle\ElementRedirectBundle\Event\RedirectEvent;
+use Phlexible\Bundle\ElementRedirectBundle\Model\RedirectManagerInterface;
+use Phlexible\Bundle\ElementRedirectBundle\RedirectEvents;
 use Phlexible\Bundle\ElementRedirectBundle\Entity\Redirect;
+use Phlexible\Bundle\TreeBundle\Model\TreeNodeInterface;
+use Phlexible\Bundle\TreeBundle\Tree\TreeManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -27,7 +29,7 @@ class RedirectManager implements RedirectManagerInterface
     private $entityManager;
 
     /**
-     * @var TreeManagerInterface
+     * @var TreeManager
      */
     private $treeManager;
 
@@ -43,11 +45,14 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param EntityManagerInterface   $entityManager
-     * @param TreeManagerInterface     $treeManager
+     * @param TreeManager              $treeManager
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EntityManagerInterface $entityManager, TreeManagerInterface $treeManager, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        TreeManager $treeManager,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->entityManager = $entityManager;
         $this->treeManager = $treeManager;
         $this->eventDispatcher = $eventDispatcher;
@@ -68,7 +73,7 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function findByNodeAndLanguage(Node $node, $language)
+    public function findByNodeAndLanguage(TreeNodeInterface $node, $language)
     {
         $redirects = $this->getRedirectRepository()->findBy(array(
             'nodeId' => $node->getId(),
@@ -112,14 +117,24 @@ class RedirectManager implements RedirectManagerInterface
         foreach ($redirects as $redirect) {
             $nodeId = $redirect->getNodeId();
 
-            $node = $this->treeManager->getNodeByNodeId($nodeId);
+            $tree = $this->treeManager->getByNodeId($nodeId);
 
-            if ($node->getSiteRootId() === $siterootId) {
+            if ($tree->getSiterootId() === $siterootId) {
                 return $redirect;
             }
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateRedirects(array $redirects)
+    {
+        foreach ($redirects as $redirect) {
+            $this->updateRedirect($redirect);
+        }
     }
 
     /**
@@ -137,6 +152,16 @@ class RedirectManager implements RedirectManagerInterface
 
         $event = new RedirectEvent($redirect);
         $this->eventDispatcher->dispatch(RedirectEvents::SAVE, $event);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteRedirects(array $redirects)
+    {
+        foreach ($redirects as $redirect) {
+            $this->deleteRedirect($redirect);
+        }
     }
 
     /**
