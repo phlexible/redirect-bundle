@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\ElementRedirect;
+namespace Phlexible\Bundle\ElementRedirectBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

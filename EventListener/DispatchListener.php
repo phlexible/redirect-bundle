@@ -8,30 +8,40 @@
 
 namespace Phlexible\Bundle\ElementRedirect\EventListener;
 
+use Phlexible\Bundle\ElementRedirect\Model\RedirectManagerInterface;
+
 /**
  * Dispatch listener
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class Makeweb_Redirects_Callback
+class DispatchListener
 {
-    public function callDispatchTid(Makeweb_Frontend_Event_BeforeDispatchTid $event, array $params)
+    /**
+     * @var RedirectManagerInterface
+     */
+    private $redirectManager;
+
+    /**
+     * @param RedirectManagerInterface $redirectManager
+     */
+    public function __construct(RedirectManagerInterface $redirectManager)
+    {
+        $this->redirectManager = $redirectManager;
+    }
+
+    public function onDispatchTid(BeforeDispatchTid $event)
     {
         $request = $event->getRequest();
 
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $request->getUri();
 
-        if (!$uri || $uri == '/')
-        {
+        if (!$uri || $uri == '/') {
             return;
         }
 
-        $container        = $params['container'];
-        $redirectsManager = $container->redirectsManager;
-
-        $redirect = $redirectsManager->getForUriAndSiterootId($uri, $request->getSiteRootId());
-        if ($redirect == null)
-        {
+        $redirect = $this->redirectManager->findByUriAndSiterootId($uri, $request->getSiteRootId());
+        if (!$redirect) {
             return;
         }
 
