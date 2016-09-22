@@ -1,0 +1,9 @@
+elementredirect:
+    component_description: Redirects description
+    component_name: Redirects
+    redirects: Redirects
+    redirect: Redirect
+    no_redirects_defined: No redirects defined.
+    add: Add
+    remove: Remove
+    url: Url

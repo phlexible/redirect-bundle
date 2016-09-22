@@ -1,0 +1,9 @@
+elementredirect:
+    component_description: Umleitungen Beschreibung
+    component_name: Umleitungen
+    redirects: Umleitungen
+    redirect: Umleitung
+    no_redirects_defined: Keine Umleitungen definiert.
+    add: Hinzufügen
+    remove: Entfernen
+    url: Url
