@@ -9,6 +9,7 @@
 namespace Phlexible\Bundle\ElementRedirectBundle\EventListener;
 
 use Phlexible\Bundle\ElementRedirectBundle\Model\RedirectManagerInterface;
+use Phlexible\Bundle\SiterootBundle\Exception\RuntimeException;
 use Phlexible\Bundle\SiterootBundle\Siteroot\SiterootRequestMatcher;
 use Phlexible\Bundle\TreeBundle\ContentTree\ContentTreeManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -73,6 +74,9 @@ class RedirectListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
@@ -84,6 +88,10 @@ class RedirectListener implements EventSubscriberInterface
         }
 
         $siteroot = $this->requestMatcher->matchRequest($request);
+
+        if (is_null($siteroot)) {
+            throw new RuntimeException('Couldn\'t match any siteroot by request. Ensure siteroot mapping is setup correctly.');
+        }
 
         $redirect = $this->redirectManager->findByUriAndSiterootId($uri, $siteroot->getId());
         if (!$redirect) {
