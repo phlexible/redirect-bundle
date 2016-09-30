@@ -20,6 +20,7 @@ services:
             - "@phlexible_element_redirect.redirect_manager"
             - "@phlexible_tree.content_tree_manager"
             - "@phlexible_siteroot.siteroot_request_matcher"
+            - "@request_stack"
             - "@router"
         tags:
             - {name: kernel.event_subscriber}
