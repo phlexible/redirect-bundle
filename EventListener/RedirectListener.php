@@ -103,10 +103,6 @@ class RedirectListener implements EventSubscriberInterface
             return;
         }
 
-        if (is_null($siteroot)) {
-            throw new RuntimeException('Couldn\'t match any siteroot by request. Ensure siteroot mapping is setup correctly.');
-        }
-
         $redirect = $this->redirectManager->findByUriAndSiterootId($uri, $siteroot->getId());
         if (!$redirect) {
             return;
