@@ -14,6 +14,7 @@ use Phlexible\Bundle\TreeBundle\ContentTree\ContentTreeManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -73,10 +74,16 @@ class RedirectListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $request = $event->getRequest();
+        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+            return;
+        }
 
+        $request = $event->getRequest();
         $uri = $request->getPathInfo();
 
         if (!$uri || $uri == '/') {
@@ -84,6 +91,10 @@ class RedirectListener implements EventSubscriberInterface
         }
 
         $siteroot = $this->requestMatcher->matchRequest($request);
+
+        if (!$siteroot) {
+            return;
+        }
 
         $redirect = $this->redirectManager->findByUriAndSiterootId($uri, $siteroot->getId());
         if (!$redirect) {
