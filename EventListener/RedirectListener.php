@@ -9,13 +9,12 @@
 namespace Phlexible\Bundle\ElementRedirectBundle\EventListener;
 
 use Phlexible\Bundle\ElementRedirectBundle\Model\RedirectManagerInterface;
-use Phlexible\Bundle\SiterootBundle\Exception\RuntimeException;
 use Phlexible\Bundle\SiterootBundle\Siteroot\SiterootRequestMatcher;
 use Phlexible\Bundle\TreeBundle\ContentTree\ContentTreeManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -42,11 +41,6 @@ class RedirectListener implements EventSubscriberInterface
     private $requestMatcher;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var RouterInterface
      */
     private $router;
@@ -55,20 +49,17 @@ class RedirectListener implements EventSubscriberInterface
      * @param RedirectManagerInterface    $redirectManager
      * @param ContentTreeManagerInterface $treeManager
      * @param SiterootRequestMatcher      $requestMatcher
-     * @param RequestStack                $requestStack
      * @param RouterInterface             $router
      */
     public function __construct(
         RedirectManagerInterface $redirectManager,
         ContentTreeManagerInterface $treeManager,
         SiterootRequestMatcher $requestMatcher,
-        RequestStack $requestStack,
         RouterInterface $router
     ) {
         $this->redirectManager = $redirectManager;
         $this->treeManager = $treeManager;
         $this->requestMatcher = $requestMatcher;
-        $this->requestStack = $requestStack;
         $this->router = $router;
     }
 
@@ -88,16 +79,18 @@ class RedirectListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $request = $event->getRequest();
+        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+            return;
+        }
 
+        $request = $event->getRequest();
         $uri = $request->getPathInfo();
 
         if (!$uri || $uri == '/') {
             return;
         }
 
-        $masterRequest = $this->requestStack->getMasterRequest();
-        $siteroot = $this->requestMatcher->matchRequest($masterRequest);
+        $siteroot = $this->requestMatcher->matchRequest($request);
 
         if (!$siteroot) {
             return;
