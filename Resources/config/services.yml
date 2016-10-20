@@ -1,23 +1,23 @@
 services:
-    phlexible_element_redirect.redirect_manager:
-        class: Phlexible\Bundle\ElementRedirectBundle\Doctrine\RedirectManager
+    phlexible_redirect.redirect_manager:
+        class: Phlexible\Bundle\RedirectBundle\Doctrine\RedirectManager
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@phlexible_tree.tree_manager"
             - "@event_dispatcher"
 
     # event listeners
-    phlexible_element_redirect.listener.node:
-        class: Phlexible\Bundle\ElementRedirectBundle\EventListener\NodeListener
+    phlexible_redirect.listener.node:
+        class: Phlexible\Bundle\RedirectBundle\EventListener\NodeListener
         arguments:
-            - "@phlexible_element_redirect.redirect_manager"
+            - "@phlexible_redirect.redirect_manager"
         tags:
             - {name: kernel.event_subscriber}
 
-    phlexible_element_redirect.listener.dispatch:
-        class: Phlexible\Bundle\ElementRedirectBundle\EventListener\RedirectListener
+    phlexible_redirect.listener.dispatch:
+        class: Phlexible\Bundle\RedirectBundle\EventListener\RedirectListener
         arguments:
-            - "@phlexible_element_redirect.redirect_manager"
+            - "@phlexible_redirect.redirect_manager"
             - "@phlexible_tree.content_tree_manager"
             - "@phlexible_siteroot.siteroot_request_matcher"
             - "@router"
@@ -25,8 +25,8 @@ services:
             - {name: kernel.event_subscriber}
 
     # role providers
-    phlexible_element_redirect.role_provider:
-        class: Phlexible\Bundle\ElementRedirectBundle\RoleProvider\ElementRedirectRoleProvider
+    phlexible_redirect.role_provider:
+        class: Phlexible\Bundle\RedirectBundle\RoleProvider\ElementRedirectRoleProvider
         public: false
         tags:
             - {name: phlexible_gui.role_provider}

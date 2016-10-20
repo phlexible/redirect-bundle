@@ -1,19 +1,22 @@
 <?php
-/**
- * phlexible
+
+/*
+ * This file is part of the phlexible redirect package.
  *
- * @copyright 2007-2013 brainbits GmbH (http://www.brainbits.net)
- * @license   proprietary
+ * (c) Stephan Wentz <sw@brainbits.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace Phlexible\Bundle\ElementRedirectBundle\Doctrine;
+namespace Phlexible\Bundle\RedirectBundle\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Phlexible\Bundle\ElementRedirectBundle\Event\RedirectEvent;
-use Phlexible\Bundle\ElementRedirectBundle\Model\RedirectManagerInterface;
-use Phlexible\Bundle\ElementRedirectBundle\RedirectEvents;
-use Phlexible\Bundle\ElementRedirectBundle\Entity\Redirect;
+use Phlexible\Bundle\RedirectBundle\Event\RedirectEvent;
+use Phlexible\Bundle\RedirectBundle\Model\RedirectManagerInterface;
+use Phlexible\Bundle\RedirectBundle\RedirectEvents;
+use Phlexible\Bundle\RedirectBundle\Entity\Redirect;
 use Phlexible\Bundle\TreeBundle\Model\TreeNodeInterface;
 use Phlexible\Bundle\TreeBundle\Tree\TreeManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -1,26 +1,29 @@
 <?php
-/**
- * phlexible
+
+/*
+ * This file is part of the phlexible redirect package.
  *
- * @copyright 2007-2013 brainbits GmbH (http://www.brainbits.net)
- * @license   proprietary
+ * (c) Stephan Wentz <sw@brainbits.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace Phlexible\Bundle\ElementRedirectBundle\Tests;
+namespace Phlexible\Bundle\RedirectBundle\Tests;
 
-use Phlexible\Bundle\ElementRedirectBundle\PhlexibleElementRedirectBundle;
+use Phlexible\Bundle\RedirectBundle\PhlexibleRedirectBundle;
 
 /**
  * Element redirect bundle test
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class PhlexibleElementRedirectBundleTest extends \PHPUnit_Framework_TestCase
+class PhlexibleRedirectBundleTest extends \PHPUnit_Framework_TestCase
 {
     public function testBundle()
     {
-        $bundle = new PhlexibleElementRedirectBundle();
+        $bundle = new PhlexibleRedirectBundle();
 
-        $this->assertSame('PhlexibleElementRedirectBundle', $bundle->getName());
+        $this->assertSame('PhlexibleRedirectBundle', $bundle->getName());
     }
 }

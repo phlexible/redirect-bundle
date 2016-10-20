@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Phlexible\Bundle\ElementRedirectBundle;
+namespace Phlexible\Bundle\RedirectBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Element redirect bundle
+ * Redirect bundle
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class PhlexibleElementRedirectBundle extends Bundle
+class PhlexibleRedirectBundle extends Bundle
 {
 }

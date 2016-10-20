@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Phlexible\Bundle\ElementRedirectBundle\DependencyInjection;
+namespace Phlexible\Bundle\RedirectBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -17,11 +17,11 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Element redirect extension
+ * Redirect extension
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class PhlexibleElementRedirectExtension extends Extension
+class PhlexibleRedirectExtension extends Extension
 {
     /**
      * {@inheritdoc}
