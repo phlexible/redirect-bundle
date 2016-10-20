@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Redirect listener
+ * Redirect listener.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -89,7 +89,7 @@ class RedirectListener implements EventSubscriberInterface
         $request = $event->getRequest();
         $uri = $request->getPathInfo();
 
-        if (!$uri || $uri == '/') {
+        if (!$uri || $uri === '/') {
             return;
         }
 

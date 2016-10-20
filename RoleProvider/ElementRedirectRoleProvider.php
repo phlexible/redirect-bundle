@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\RedirectBundle\RoleProvider;
 use Phlexible\Bundle\GuiBundle\Security\RoleProvider\RoleProvider;
 
 /**
- * Element redirect role provider
+ * Element redirect role provider.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
