@@ -13,16 +13,16 @@ namespace Phlexible\Bundle\RedirectBundle\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Phlexible\Bundle\RedirectBundle\Entity\Redirect;
 use Phlexible\Bundle\RedirectBundle\Event\RedirectEvent;
 use Phlexible\Bundle\RedirectBundle\Model\RedirectManagerInterface;
 use Phlexible\Bundle\RedirectBundle\RedirectEvents;
-use Phlexible\Bundle\RedirectBundle\Entity\Redirect;
 use Phlexible\Bundle\TreeBundle\Model\TreeNodeInterface;
 use Phlexible\Bundle\TreeBundle\Tree\TreeManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Redirect manager
+ * Redirect manager.
  */
 class RedirectManager implements RedirectManagerInterface
 {
@@ -80,7 +80,7 @@ class RedirectManager implements RedirectManagerInterface
     {
         $redirects = $this->getRedirectRepository()->findBy(array(
             'nodeId' => $node->getId(),
-            'language' => $language
+            'language' => $language,
         ));
 
         return $redirects;

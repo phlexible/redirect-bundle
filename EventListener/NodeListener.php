@@ -14,13 +14,12 @@ namespace Phlexible\Bundle\RedirectBundle\EventListener;
 use Phlexible\Bundle\ElementBundle\ElementEvents;
 use Phlexible\Bundle\ElementBundle\Event\LoadDataEvent;
 use Phlexible\Bundle\ElementBundle\Event\SaveNodeDataEvent;
-use Phlexible\Bundle\RedirectBundle\Model\RedirectManagerInterface;
 use Phlexible\Bundle\RedirectBundle\Entity\Redirect;
-use Phlexible\Bundle\TreeBundle\Event\NodeEvent;
+use Phlexible\Bundle\RedirectBundle\Model\RedirectManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Node listener
+ * Node listener.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -62,10 +61,10 @@ class NodeListener implements EventSubscriberInterface
         $redirects = array();
         foreach ($this->redirectManager->findByNodeAndLanguage($node, $language) as $redirect) {
             $redirects[] = array(
-                'id'       => $redirect->getId(),
-                'nodeId'   => $redirect->getNodeId(),
+                'id' => $redirect->getId(),
+                'nodeId' => $redirect->getNodeId(),
                 'language' => $redirect->getLanguage(),
-                'url'      => $redirect->getUrl(),
+                'url' => $redirect->getUrl(),
             );
         }
 

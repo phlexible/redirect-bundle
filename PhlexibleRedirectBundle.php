@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\RedirectBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Redirect bundle
+ * Redirect bundle.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

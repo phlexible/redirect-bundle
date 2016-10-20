@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\RedirectBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Redirect
+ * Redirect.
  *
  * @author Stephan Wentz sw@brainbits.net
  *

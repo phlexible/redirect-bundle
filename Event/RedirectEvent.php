@@ -15,7 +15,7 @@ use Phlexible\Bundle\RedirectBundle\Entity\Redirect;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Redirect event
+ * Redirect event.
  *
  * @author Matthias Harmuth <mharmuth@brainbits.net>
  */

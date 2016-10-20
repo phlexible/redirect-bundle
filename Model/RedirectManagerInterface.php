@@ -15,7 +15,7 @@ use Phlexible\Bundle\RedirectBundle\Entity\Redirect;
 use Phlexible\Bundle\TreeBundle\Model\TreeNodeInterface;
 
 /**
- * Redirect manager interface
+ * Redirect manager interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
