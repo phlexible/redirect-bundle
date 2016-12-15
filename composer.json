@@ -20,6 +20,9 @@
         "symfony/event-dispatcher": "~2.8",
         "symfony/http-kernel": "~2.8"
     },
+    "replace": {
+        "phlexible/element-redirect-bundle": "*"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.2-dev"
