@@ -12,13 +12,14 @@
 namespace Phlexible\Bundle\RedirectBundle\Tests;
 
 use Phlexible\Bundle\RedirectBundle\PhlexibleRedirectBundle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Element redirect bundle test.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class PhlexibleElementRedirectBundleTest extends \PHPUnit_Framework_TestCase
+class PhlexibleElementRedirectBundleTest extends TestCase
 {
     public function testBundle()
     {
