@@ -18,6 +18,8 @@ use PHPUnit\Framework\TestCase;
  * Element redirect bundle test.
  *
  * @author Stephan Wentz <sw@brainbits.net>
+ *
+ * @covers \Phlexible\Bundle\RedirectBundle\PhlexibleRedirectBundle
  */
 class PhlexibleElementRedirectBundleTest extends TestCase
 {
